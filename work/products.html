@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品中心 - 深圳智研磨具有限公司</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #06b6d4; /* 极客青 */
+            --secondary-color: #0f172a; /* 深邃蓝 */
+            --bg-light: #f8fafc;
+            --text-main: #334155;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "PingFang SC", sans-serif; }
+        body { line-height: 1.6; color: var(--text-main); background-color: var(--white); }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+
+        /* --- 导航栏 --- */
+        header {
+            background: var(--white);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 22px; font-weight: 800; color: var(--secondary-color); z-index: 1001; }
+        .logo span { color: var(--primary-color); }
+        
+        /* 桌面菜单 */
+        .nav-menu { display: flex; gap: 30px; }
+        .nav-menu a { font-weight: 500; position: relative; padding: 5px 0; }
+        .nav-menu a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0;
+            background: var(--primary-color); transition: var(--transition);
+        }
+        .nav-menu a:hover::after, .nav-menu a.active::after { width: 100%; }
+        .nav-menu a.active { color: var(--primary-color); }
+
+        /* 汉堡菜单按钮 */
+        .menu-btn {
+            display: none;
+            font-size: 24px;
+            color: var(--secondary-color);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* 移动端侧边栏 */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100vh;
+            background: var(--secondary-color);
+            z-index: 1000;
+            padding: 80px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            transition: 0.4s ease;
+        }
+        .mobile-nav.active { right: 0; }
+        .mobile-nav a { color: white; font-size: 18px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .mobile-nav a.active { color: var(--primary-color); }
+        
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 999;
+        }
+        .overlay.active { display: block; }
+
+        /* --- 内页Banner --- */
+        .inner-banner {
+            height: 240px;
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+                        url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=2070') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+            padding: 0 20px;
+        }
+        .inner-banner h1 { font-size: 30px; letter-spacing: 2px; }
+        .breadcrumb { font-size: 13px; margin-top: 10px; opacity: 0.8; }
+
+        /* --- 产品筛选（移动端横向滑动） --- */
+        .category-nav {
+            background: var(--bg-light);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            position: sticky;
+            top: 60px;
+            z-index: 998;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .category-nav::-webkit-scrollbar { display: none; } /* 隐藏滑动条 */
+
+        .cat-link {
+            padding: 6px 18px;
+            border-radius: 20px;
+            background: var(--white);
+            border: 1px solid #e2e8f0;
+            font-size: 13px;
+            cursor: pointer;
+            white-space: nowrap; /* 防止换行 */
+        }
+        .cat-link.active { background: var(--primary-color); color: var(--white); border-color: var(--primary-color); }
+
+        /* --- 产品列表区 --- */
+        .section { padding: 60px 10%; }
+        .category-title { margin-bottom: 30px; border-left: 4px solid var(--primary-color); padding-left: 12px; }
+        .category-title h2 { font-size: 24px; color: var(--secondary-color); }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(15, 23, 42, 0.1); border-color: var(--primary-color); }
+
+        .product-img-box { width: 100%; height: 200px; overflow: hidden; background: #f1f5f9; }
+        .product-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
+        .product-card:hover .product-img-box img { transform: scale(1.1); }
+
+        .product-info { padding: 15px; text-align: center; }
+        .product-info h3 { font-size: 16px; color: var(--secondary-color); margin-bottom: 5px; }
+        .product-info .spec { font-size: 13px; color: var(--primary-color); font-weight: bold; margin-bottom: 12px; display: block; }
+        
+        .view-btn {
+            display: inline-block; padding: 6px 20px; border: 1px solid var(--primary-color);
+            color: var(--primary-color); border-radius: 4px; font-size: 12px;
+        }
+
+        /* --- 底部咨询 --- */
+        .product-cta {
+            background: var(--secondary-color); color: var(--white);
+            padding: 50px 5%; text-align: center; border-radius: 15px; margin: 0 10% 60px;
+        }
+        .product-cta h2 { font-size: 24px; margin-bottom: 15px; }
+        .cta-btn-main {
+            display: inline-block; background: var(--primary-color); color: white;
+            padding: 12px 35px; border-radius: 5px; font-weight: bold; margin-top: 20px;
+        }
+
+        footer { background: #020617; color: var(--white); padding: 40px 5%; text-align: center; }
+
+        /* --- 移动端核心兼容查询 --- */
+        @media (max-width: 768px) {
+            header { padding: 10px 5%; }
+            .nav-menu { display: none; }
+            .menu-btn { display: block; }
+            .section { padding: 40px 5%; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } /* 手机端显示双列 */
+            .product-img-box { height: 150px; }
+            .product-info h3 { font-size: 14px; }
+            .product-info .spec { font-size: 11px; }
+            .product-cta { margin: 0 5% 40px; }
+            .category-nav { justify-content: flex-start; top: 52px; }
+        }
+
+        @media (max-width: 480px) {
+            .product-grid { grid-template-columns: 1fr; } /* 极小屏单列 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay" id="overlay"></div>
+
+    <header>
+        <div class="logo" onclick="location.href='web.html'">智研<span>磨具</span></div>
+        <!-- 桌面导航 -->
+        <nav class="nav-menu">
+            <a href="web.html">首页</a>
+            <a href="products.html" class="active">产品中心</a>
+            <a href="oem.html">OEM定制</a>
+            <a href="about.html">关于智研</a>
+            <a href="contact.html">联系我们</a>
+        </nav>
+        <i class="fas fa-bars menu-btn" id="menu-open"></i>
+    </header>
+
+    <!-- 移动端侧边抽屉 -->
+    <nav class="mobile-nav" id="mobile-nav">
+        <a href="web.html">首页</a>
+        <a href="products.html" class="active">产品中心</a>
+        <a href="oem.html">OEM定制</a>
+        <a href="about.html">关于智研</a>
+        <a href="contact.html">联系我们</a>
+        <a href="tel:+8618796960868" style="color:var(--primary-color); border:none; margin-top:20px;">
+            <i class="fas fa-phone"></i> 立即拨号
+        </a>
+    </nav>
+
+    <section class="inner-banner">
+        <h1>产品展示中心</h1>
+        <div class="breadcrumb">
+            <a href="web.html" style="color:white">首页</a> / 产品展示
+        </div>
+    </section>
+
+    <!-- 分类导航（手机端可横向滑动） -->
+    <div class="category-nav">
+        <a href="#domestic" class="cat-link active">内销精品</a>
+        <a href="#export" class="cat-link">外贸出口系列</a>
+        <a href="#flap" class="cat-link">强力百叶片</a>
+        <a href="#mini" class="cat-link">迷你切割片</a>
+    </div>
+
+    <!-- 内销系列 -->
+    <section class="section" id="domestic">
+        <div class="category-title">
+            <h2>内销 · 工业级标准</h2>
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-img-box"><img src="https://www.dmsl666.com/wp-content/uploads/2024/08/2-inch-cutting-disc.jpg" alt="切割片"></div>
+                <div class="product-info">
+                    <h3>超薄金属切割片</h3>
+                    <span class="spec">50 * 1.0 * 10mm</span>
+                    <a href="contact.html" class="view-btn">咨询</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img-box"><img src="https://www.dmsl666.com/wp-content/uploads/2023/09/105cuttingdisccn-jpg.webp" alt="切割片"></div>
+                <div class="product-info">
+                    <h3>精品不锈钢切割片</h3>
+                    <span class="spec">107 * 1.2 * 16mm</span>
+                    <a href="contact.html" class="view-btn">咨询</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img-box"><img src="https://www.dmsl666.com/wp-content/uploads/2023/09/100grindingwheel-jpg.webp" alt="磨片"></div>
+                <div class="product-info">
+                    <h3>增强型打磨片</h3>
+                    <span class="spec">100 * 6.0 * 16mm</span>
+                    <a href="contact.html" class="view-btn">咨询</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img-box"><img src="https://www.dmsl666.com/wp-content/uploads/2023/09/355cuttingdisccn-jpg.webp" alt="大切割片"></div>
+                <div class="product-info">
+                    <h3>型材切割机专用片</h3>
+                    <span class="spec">355 * 2.5 * 25.4mm</span>
+                    <a href="contact.html" class="view-btn">咨询</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 外贸系列 -->
+    <section class="section" id="export" style="background-color: var(--bg-light);">
+        <div class="category-title">
+            <h2>外贸 · 全球通用系列</h2>
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-img-box"><img src="https://www.dmsl666.com/wp-content/uploads/2023/09/115cuttingdisc-wm-jpg.webp" alt="出口切割片"></div>
+                <div class="product-info">
+                    <h3>欧标超薄切割片</h3>
+                    <span class="spec">115 * 1.0 * 22.2mm</span>
+                    <a href="contact.html" class="view-btn">询价</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img-box"><img src="https://www.dmsl666.com/wp-content/uploads/2023/09/230cuttingdisc-wm-jpg.webp" alt="出口切割片"></div>
+                <div class="product-info">
+                    <h3>工业级大切割片</h3>
+                    <span class="spec">230 * 2.0 * 22.2mm</span>
+                    <a href="contact.html" class="view-btn">询价</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA 咨询 -->
+    <section class="product-cta">
+        <h2>需要特殊规格定制？</h2>
+        <p>支持非标尺寸研发，10片免费拿样测试</p>
+        <a href="contact.html" class="cta-btn-main">获取定制方案</a>
+    </section>
+
+    <footer>
+        <div class="logo" style="color: white; margin-bottom: 10px;">智研<span>磨具</span></div>
+        <p style="color: var(--text-light); font-size: 12px;">粤ICP备2026XXXXX号 | 深圳智研磨具有限公司</p>
+    </footer>
+
+    <script>
+        // 移动端菜单开关逻辑
+        const menuBtn = document.getElementById('menu-open');
+        const mobileNav = document.getElementById('mobile-nav');
+        const overlay = document.getElementById('overlay');
+
+        function toggleMenu() {
+            mobileNav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            // 切换图标
+            if(mobileNav.classList.contains('active')) {
+                menuBtn.classList.replace('fa-bars', 'fa-times');
+                menuBtn.style.color = 'white';
+            } else {
+                menuBtn.classList.replace('fa-times', 'fa-bars');
+                menuBtn.style.color = '#0f172a';
+            }
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // 分类点击激活态
+        const catLinks = document.querySelectorAll('.cat-link');
+        catLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                catLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

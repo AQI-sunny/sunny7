@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OEM定制服务 - 深圳智研磨具有限公司</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #06b6d4; /* 极客青 */
+            --secondary-color: #0f172a; /* 深邃蓝 */
+            --bg-light: #f8fafc;
+            --text-main: #334155;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "PingFang SC", sans-serif; }
+        body { line-height: 1.6; color: var(--text-main); background: var(--white); }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+
+        /* --- 导航栏 (保持与web.html一致) --- */
+        header {
+            background: var(--white);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 24px; font-weight: 800; color: var(--secondary-color); }
+        .logo span { color: var(--primary-color); }
+        .nav-menu { display: flex; gap: 30px; }
+        .nav-menu a { font-weight: 500; position: relative; padding: 5px 0; }
+        .nav-menu a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0;
+            background: var(--primary-color); transition: var(--transition);
+        }
+        .nav-menu a:hover::after, .nav-menu a.active::after { width: 100%; }
+        .nav-menu a.active { color: var(--primary-color); }
+
+        /* --- 内页Banner --- */
+        .inner-banner {
+            height: 350px;
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), 
+                        url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=2070') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+        }
+        .inner-banner h1 { font-size: 40px; letter-spacing: 2px; }
+        .breadcrumb { font-size: 14px; margin-top: 15px; opacity: 0.8; }
+
+        /* --- 定制分类 --- */
+        .section { padding: 80px 10%; }
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 { font-size: 32px; color: var(--secondary-color); position: relative; padding-bottom: 15px; }
+        .section-title h2::after { content: ''; width: 50px; height: 3px; background: var(--primary-color); position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); }
+
+        .oem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .oem-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #f1f5f9;
+            transition: var(--transition);
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .oem-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.1);
+            border-color: var(--primary-color);
+        }
+        .oem-img { width: 100%; height: 180px; overflow: hidden; }
+        .oem-img img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+        .oem-card:hover .oem-img img { transform: scale(1.1); }
+        .oem-card h3 { font-size: 18px; margin: 15px 0 10px; color: var(--secondary-color); }
+        .oem-card p { font-size: 13px; color: var(--text-light); padding: 0 15px; margin-bottom: 15px; }
+        .btn-sm { 
+            display: inline-block; padding: 6px 20px; border: 1px solid var(--primary-color); 
+            color: var(--primary-color); border-radius: 4px; font-size: 12px; font-weight: bold;
+        }
+        .oem-card:hover .btn-sm { background: var(--primary-color); color: var(--white); }
+
+        /* --- 包装展示 --- */
+        .pack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .pack-item { border-radius: 8px; overflow: hidden; position: relative; }
+        .pack-item img { width: 100%; transition: var(--transition); display: block; }
+        .pack-overlay {
+            position: absolute; bottom: 0; left: 0; right: 0; padding: 15px;
+            background: linear-gradient(transparent, rgba(15, 23, 42, 0.9));
+            color: white; font-size: 14px; transform: translateY(10px); opacity: 0; transition: var(--transition);
+        }
+        .pack-item:hover .pack-overlay { opacity: 1; transform: translateY(0); }
+        .pack-item:hover img { transform: scale(1.05); }
+
+        /* --- 市场分布 --- */
+        .market-section { background: var(--bg-light); }
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .market-box {
+            background: white; padding: 25px; border-radius: 10px; border-top: 3px solid var(--primary-color);
+        }
+        .market-box h4 { margin-bottom: 10px; color: var(--secondary-color); display: flex; align-items: center; gap: 8px; }
+        .market-box ul { font-size: 13px; color: var(--text-light); line-height: 2; }
+
+        /* --- 联系表单 --- */
+        .contact-container {
+            display: flex; gap: 50px; flex-wrap: wrap; background: var(--secondary-color);
+            padding: 50px; border-radius: 20px; color: white;
+        }
+        .form-side { flex: 1.5; min-width: 300px; }
+        .info-side { flex: 1; min-width: 250px; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 50px; }
+        .form-side input, .form-side textarea {
+            width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 5px; border: none; background: #1e293b; color: white;
+        }
+        .form-side button {
+            background: var(--primary-color); color: white; border: none; padding: 15px 40px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%;
+        }
+        .info-item { margin-bottom: 30px; }
+        .info-item i { color: var(--primary-color); font-size: 24px; margin-bottom: 10px; }
+
+        /* --- 底部 --- */
+        footer { background: #020617; color: var(--white); padding: 40px 10%; text-align: center; font-size: 14px; }
+
+        @media (max-width: 768px) {
+            .section { padding: 50px 5%; }
+            .nav-menu { display: none; }
+            .info-side { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
+            .contact-container { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">智研<span>磨具</span></div>
+        <nav class="nav-menu">
+            <a href="web.html">首页</a>
+            <a href="products.html">产品中心</a>
+            <a href="oem.html" class="active">OEM定制</a>
+            <a href="about.html">关于智研</a>
+            <a href="#">联系我们</a>
+        </nav>
+        <a href="#quote" class="btn-sm" style="background:var(--primary-color); color:white; border:none; padding:8px 20px;">获取报价</a>
+    </header>
+
+    <section class="inner-banner">
+        <h1>OEM/ODM 全链路定制服务</h1>
+        <div class="breadcrumb">
+            <a href="web.html" style="color:white">首页</a> / 定制服务
+        </div>
+    </section>
+
+    <!-- 定制核心类别 -->
+    <section class="section">
+        <div class="section-title">
+            <h2>定制业务范畴</h2>
+            <p style="color:var(--text-light); margin-top:10px;">依托深圳研发中心，提供从原材料配方到品牌设计的全方位支持</p>
+        </div>
+        <div class="oem-grid">
+            <div class="oem-card">
+                <div class="oem-img"><img src="https://www.dmsl666.com/wp-content/uploads/2023/09/cutting-discs-cn-1-jpg.webp" alt="切割片定制"></div>
+                <h3>切割片定制</h3>
+                <p>根据工件材质（不锈钢/碳钢/铝）调配专属配方，提升切割寿命。</p>
+                <a href="#" class="btn-sm">定制参数</a>
+            </div>
+            <div class="oem-card">
+                <div class="oem-img"><img src="https://www.dmsl666.com/wp-content/uploads/2023/09/grinding-wheels-home-cn-1-jpg.webp" alt="磨片定制"></div>
+                <h3>研磨磨片定制</h3>
+                <p>三层增强安全网工艺，支持特殊厚度与硬度等级OEM代工。</p>
+                <a href="#" class="btn-sm">获取方案</a>
+            </div>
+            <div class="oem-card">
+                <div class="oem-img"><img src="https://www.dmsl666.com/wp-content/uploads/2023/09/flap-discs-home-cn-1-jpg.webp" alt="百叶片定制"></div>
+                <h3>抛光页轮定制</h3>
+                <p>涵盖玻璃纤维基、塑料基等不同盖盘，选用高规格煅烧砂布。</p>
+                <a href="#" class="btn-sm">询价申请</a>
+            </div>
+            <div class="oem-card">
+                <div class="oem-img"><img src="https://www.dmsl666.com/wp-content/uploads/2023/09/Non-standard-products-cn-jpg.webp" alt="非标定制"></div>
+                <h3>非标产品研发</h3>
+                <p>针对特殊异形件、极高转速需求提供的非标尺寸打样服务。</p>
+                <a href="#" class="btn-sm">联系专家</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 包装方案 -->
+    <section class="section" style="background:var(--bg-light)">
+        <div class="section-title">
+            <h2>多元化包装定制</h2>
+            <p style="color:var(--text-light); margin-top:10px;">打造品牌视觉溢价，提供经济、豪华、专业等多级包装方案</p>
+        </div>
+        <div class="pack-grid">
+            <div class="pack-item">
+                <img src="https://www.dmsl666.com/wp-content/uploads/2023/09/packing1-jpg.webp" alt="包装1">
+                <div class="pack-overlay">工业简约型：半塑封/全塑封，主打高性价比</div>
+            </div>
+            <div class="pack-item">
+                <img src="https://www.dmsl666.com/wp-content/uploads/2023/09/packing2-jpg.webp" alt="包装2">
+                <div class="pack-overlay">品牌礼盒型：高品质彩盒，适合零售与商超</div>
+            </div>
+            <div class="pack-item">
+                <img src="https://www.dmsl666.com/wp-content/uploads/2023/09/packing3-jpg.webp" alt="包装3">
+                <div class="pack-overlay">重型桶装：塑料桶/铁桶，提供卓越防护</div>
+            </div>
+            <div class="pack-item">
+                <img src="https://www.dmsl666.com/wp-content/uploads/2023/09/packing4-jpg.webp" alt="包装4">
+                <div class="pack-overlay">外贸出口型：加厚牛皮纸箱，抗压防潮</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 全球市场 -->
+    <section class="section">
+        <div class="section-title">
+            <h2>全球市场定制参考</h2>
+            <p>基于全球90多个国家的供货经验，为您推荐当地主流型号</p>
+        </div>
+        <div class="market-grid">
+            <div class="market-box">
+                <h4><i class="fas fa-globe-americas"></i> 拉丁美洲</h4>
+                <ul>
+                    <li>115 x 1.0 x 22.2mm</li>
+                    <li>180 x 1.6 x 22.2mm</li>
+                    <li>230 x 2.0 x 22.2mm</li>
+                </ul>
+            </div>
+            <div class="market-box">
+                <h4><i class="fas fa-globe-europe"></i> 欧洲市场</h4>
+                <ul>
+                    <li>125 x 1.0 x 22.2mm</li>
+                    <li>150 x 1.2 x 22.2mm</li>
+                    <li>230 x 6.0 x 22.2mm</li>
+                </ul>
+            </div>
+            <div class="market-box">
+                <h4><i class="fas fa-globe-asia"></i> 东南亚/亚洲</h4>
+                <ul>
+                    <li>107 x 1.2 x 16.0mm</li>
+                    <li>100 x 6.0 x 16.0mm</li>
+                    <li>355 x 3.0 x 25.4mm</li>
+                </ul>
+            </div>
+            <div class="market-box">
+                <h4><i class="fas fa-globe-africa"></i> 非洲/中东</h4>
+                <ul>
+                    <li>115 x 3.0 x 22.2mm</li>
+                    <li>230 x 3.0 x 22.2mm</li>
+                    <li>180 x 6.0 x 22.2mm</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 表单留资 -->
+    <section class="section market-section" id="quote">
+        <div class="contact-container">
+            <div class="form-side">
+                <h2 style="margin-bottom: 20px;">立即获取定制方案</h2>
+                <p style="margin-bottom: 30px; opacity: 0.8;">填写下方信息，我们的定制专家将在2小时内为您提供报价与方案。</p>
+                <form>
+                    <div style="display: flex; gap: 15px;">
+                        <input type="text" placeholder="您的姓名*">
+                        <input type="text" placeholder="联系电话*">
+                    </div>
+                    <input type="email" placeholder="公司邮箱*">
+                    <input type="text" placeholder="定制需求说明 (如: 规格、数量、包装等)">
+                    <textarea rows="4" placeholder="补充信息"></textarea>
+                    <button type="submit">提交申请</button>
+                </form>
+            </div>
+            <div class="info-side">
+                <div class="info-item">
+                    <i class="fas fa-headset"></i>
+                    <h4>电话热线</h4>
+                    <p>+86 187-xxxx-xxxx</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <h4>在线邮箱</h4>
+                    <p>service@szzy.com</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h4>深圳总部</h4>
+                    <p>广东省深圳市宝安区智造谷智能大厦</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo" style="color: white; margin-bottom: 15px;">智研<span>磨具</span></div>
+        <p style="opacity: 0.6;">版权所有 © 2026 深圳智研磨具有限公司 | 粤ICP备2026XXXXX号</p>
+    </footer>
+
+</body>
+</html>

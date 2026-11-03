@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们 - 深圳智研磨具有限公司</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #06b6d4; /* 极客青 */
+            --secondary-color: #0f172a; /* 深邃蓝 */
+            --bg-light: #f8fafc;
+            --text-main: #334155;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "PingFang SC", sans-serif; }
+        body { line-height: 1.6; color: var(--text-main); background: var(--white); }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+
+        /* --- 导航栏 (保持与web.html一致) --- */
+        header {
+            background: var(--white);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 24px; font-weight: 800; color: var(--secondary-color); }
+        .logo span { color: var(--primary-color); }
+        .nav-menu { display: flex; gap: 30px; }
+        .nav-menu a { font-weight: 500; position: relative; padding: 5px 0; }
+        .nav-menu a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0;
+            background: var(--primary-color); transition: var(--transition);
+        }
+        .nav-menu a:hover::after, .nav-menu a.active::after { width: 100%; }
+        .nav-menu a.active { color: var(--primary-color); }
+
+        /* --- 内页Banner --- */
+        .inner-banner {
+            height: 300px;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), 
+                        url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=2070') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            text-align: center;
+        }
+        .inner-banner h1 { font-size: 36px; letter-spacing: 2px; }
+        .breadcrumb { font-size: 14px; margin-top: 10px; opacity: 0.8; }
+
+        /* --- 联系卡片区 --- */
+        .section { padding: 80px 10%; }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        .contact-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 15px;
+            border: 1px solid #f1f5f9;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .contact-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05);
+        }
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            background: var(--bg-light);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 20px;
+            transition: var(--transition);
+        }
+        .contact-card:hover .icon-box {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: rotateY(360deg);
+        }
+        .contact-card h3 { margin-bottom: 10px; color: var(--secondary-color); }
+        .contact-card p { font-size: 14px; color: var(--text-light); }
+        .contact-card a:hover { color: var(--primary-color); }
+
+        /* --- 地图与表单区 --- */
+        .map-form-section {
+            background: var(--bg-light);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            padding: 80px 10%;
+            align-items: start;
+        }
+        .map-container {
+            width: 100%;
+            height: 450px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: #e5e7eb;
+        }
+        .contact-form-box {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: bold; color: var(--secondary-color); }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            outline: none;
+            transition: var(--transition);
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+        .submit-btn {
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+        }
+        .submit-btn:hover { background: var(--primary-color); transform: translateY(-2px); }
+
+        /* --- 底部 (保持一致) --- */
+        footer { background: #020617; color: var(--white); padding: 60px 10% 20px; text-align: center; }
+
+        /* --- 移动端优化 --- */
+        @media (max-width: 992px) {
+            .map-form-section { grid-template-columns: 1fr; padding: 60px 5%; }
+            .nav-menu { display: none; }
+            .section { padding: 60px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">智研<span>磨具</span></div>
+        <nav class="nav-menu">
+            <a href="web.html">首页</a>
+            <a href="products.html">产品中心</a>
+            <a href="oem.html">OEM定制</a>
+            <a href="about.html">关于智研</a>
+            <a href="contact.html" class="active">联系我们</a>
+        </nav>
+        <a href="tel:+8618796960868" class="cta-btn" style="background:var(--primary-color); color:white; padding:8px 20px; border-radius:4px; font-size: 14px;">一键拨号</a>
+    </header>
+
+    <section class="inner-banner">
+        <h1>联系我们</h1>
+        <div class="breadcrumb">
+            <a href="web.html" style="color:white">首页</a> / 联系我们
+        </div>
+    </section>
+
+    <!-- 联系核心卡片 -->
+    <section class="section">
+        <div style="text-align:center; margin-bottom:50px;">
+            <h2 style="font-size:32px; color:var(--secondary-color);">获取智造研磨方案</h2>
+            <p style="color:var(--text-light); margin-top:10px;">无论您是咨询产品参数，还是寻求深度OEM代工，我们的专家团队随时待命</p>
+        </div>
+
+        <div class="contact-grid">
+            <!-- 电话 -->
+            <div class="contact-card">
+                <div class="icon-box"><i class="fas fa-headset"></i></div>
+                <h3>业务热线</h3>
+                <p><a href="tel:+8618796960868">+86 187-xxxx-xxxx</a></p>
+                <p><a href="tel:075588888888">0755-8888 8888</a></p>
+            </div>
+            <!-- 邮箱 -->
+            <div class="contact-card">
+                <div class="icon-box"><i class="fas fa-envelope-open-text"></i></div>
+                <h3>在线邮箱</h3>
+                <p><a href="mailto:service@szzy.com">service@szzy.com</a></p>
+                <p><a href="mailto:morie@szzy.com">morie@szzy.com</a></p>
+            </div>
+            <!-- 社交/即时通讯 -->
+            <div class="contact-card">
+                <div class="icon-box"><i class="fab fa-weixin"></i></div>
+                <h3>即时通讯</h3>
+                <p>微信：187-xxxx-xxxx</p>
+                <p>QQ咨询：2853902877</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 地图与表单 -->
+    <section class="map-form-section">
+        <div class="map-container">
+            <!-- 这里可以放置百度地图/高德地图的Iframe -->
+            <!-- 示例使用的是占位图片叠加文字，实际开发时替换为地图代码 -->
+            <div style="width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#cbd5e1; color:#475569; text-align:center; padding: 20px;">
+                <i class="fas fa-map-marked-alt" style="font-size:50px; margin-bottom:15px; color:var(--primary-color);"></i>
+                <h3>深圳智研磨具生产基地</h3>
+                <p style="margin-top:10px;">广东省深圳市宝安区智造谷智能大厦A座</p>
+                <small style="margin-top:20px; color:#64748b;">(实际点击可跳转高德导航)</small>
+            </div>
+        </div>
+
+        <div class="contact-form-box">
+            <h3 style="margin-bottom:25px; color:var(--secondary-color);">在线留言获取报价</h3>
+            <form action="#">
+                <div class="form-group">
+                    <label>您的姓名 *</label>
+                    <input type="text" placeholder="请输入姓名" required>
+                </div>
+                <div class="form-group">
+                    <label>联系电话 *</label>
+                    <input type="tel" placeholder="请输入您的手机号码" required>
+                </div>
+                <div class="form-group">
+                    <label>公司名称 / 地址</label>
+                    <input type="text" placeholder="请输入公司全称及所在地区">
+                </div>
+                <div class="form-group">
+                    <label>留言内容</label>
+                    <textarea rows="4" placeholder="请简单描述您的规格需求（如：107切割片 1万片）"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">立即提交留言</button>
+                <p style="font-size:12px; color:var(--text-light); margin-top:15px; text-align:center;">* 我们的客户经理将在1小时内与您取得联系</p>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo" style="color: white; margin-bottom: 15px;">智研<span>磨具</span></div>
+        <p style="opacity: 0.6; font-size: 14px;">立足深圳·服务全球工业 | 质量保证 · 价格优势</p>
+        <p style="opacity: 0.6; font-size: 14px; margin-top: 10px;">版权所有 © 2026 深圳智研磨具有限公司 | 粤ICP备2026XXXXX号</p>
+    </footer>
+
+</body>
+</html>
