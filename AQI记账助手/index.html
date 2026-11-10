@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0d1220">
+<title>AQI的记账助手 · 本地离线精确记账</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234fc3f7'/><text x='50' y='70' font-size='58' text-anchor='middle' fill='%23071018' font-family='sans-serif' font-weight='bold'>账</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+<script>
+/* 提前应用已保存的主题，避免打开瞬间闪一下深色 */
+(function () {
+  try {
+    var t = localStorage.getItem('jizhang.theme');
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
+</head>
+<body>
+
+<div id="app"></div>
+<div id="toast" class="toast"></div>
+
+<!-- 依赖顺序很重要：工具 / 金额 / 分类 / 解析 / 存储 / 导入 / 去重 / 筛选 / 图表 / 导出 / 界面 -->
+<script src="js/util.js"></script>
+<script src="js/money.js"></script>
+<script src="js/categorize.js"></script>
+<script src="js/parse.js"></script>
+<script src="js/store.js"></script>
+<script src="js/importer.js"></script>
+<script src="js/dedupe.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/exportImage.js"></script>
+<script src="js/ui.js"></script>
+
+</body>
+</html>
